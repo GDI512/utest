@@ -1,0 +1,21 @@
+cmake_minimum_required (VERSION 3.15)
+
+add_library (utest OBJECT)
+add_library (utest::utest ALIAS utest)
+target_sources (utest PRIVATE main.cpp state.cpp output.cpp)
+target_include_directories (utest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+if ("${CMAKE_SOURCE_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}")
+    add_library (utest_static)
+    target_link_libraries (utest_static PUBLIC utest)
+endif ()
+
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    target_compile_options (utest PRIVATE /permissive- /W4 /WX PUBLIC /std:c++20)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_compile_options (utest PRIVATE -pedantic -Wall -Wextra -Werror PUBLIC -std=c++20)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    target_compile_options (utest PRIVATE -pedantic -Wall -Wextra -Werror PUBLIC -std=c++20)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
+    target_compile_options (utest PRIVATE -pedantic -Wall -Wextra -Werror PUBLIC -std=c++2a)
+endif ()

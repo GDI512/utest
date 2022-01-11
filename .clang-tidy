@@ -1,0 +1,10 @@
+---
+Checks: '-*,
+         bugprone-*,
+         performance-*,
+         clang-analyzer-*,
+         clang-diagnostic-*'
+UseColor: true
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+...
