@@ -1,16 +1,19 @@
 #ifndef UTEST_ASSERT_HPP
 #define UTEST_ASSERT_HPP
 
+#include "utility.hpp"
 #include "state.hpp"
 
 namespace test {
 
+    using executable = auto (*)() -> void;
+
     class require_tag {};
 
-    using executable = auto (*)() -> void;
     extern executable test;
 
-    auto group(auto&& callable, source_location source = source_location::current()) noexcept {
+    auto group(auto&& callable,
+      source_location source = source_location::current()) noexcept {
         try {
             callable();
         } catch (const require_tag&) {
