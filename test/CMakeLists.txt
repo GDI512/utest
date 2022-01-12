@@ -6,6 +6,3 @@ function (add_test_executable target source)
     target_link_libraries (${target} PRIVATE utest_static)
     add_test (NAME ${source} COMMAND ${target})
 endfunction ()
-
-add_test_executable (assert assert.cpp)
-add_test_executable (sample sample.cpp)
