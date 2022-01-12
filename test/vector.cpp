@@ -1,6 +1,5 @@
-#include <assert.hpp>
+#include <utest.hpp>
 
-#include <utility>
 #include <vector>
 
 test::executable test::test = [] {
