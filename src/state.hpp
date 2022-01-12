@@ -3,15 +3,21 @@
 
 #include <experimental/source_location>
 
-namespace test::core {
+namespace test {
 
     using std::experimental::source_location;
 
-    class require_error {};
+    class exit_tag {};
 
-    auto report(bool result, source_location source) noexcept -> void;
+    auto setvbuf() noexcept -> void;
 
-    auto check_throw(auto&& callable) noexcept {
+    auto clear_state() noexcept -> void;
+
+    auto exit_code() noexcept -> int;
+
+    auto report_error(source_location source) noexcept -> void;
+
+    auto test_throw(auto&& callable) noexcept {
         try {
             callable();
             return false;
@@ -20,7 +26,7 @@ namespace test::core {
         }
     }
 
-    auto check_noexcept(auto&& callable) noexcept {
+    auto test_noexcept(auto&& callable) noexcept {
         try {
             callable();
             return true;
@@ -29,21 +35,21 @@ namespace test::core {
         }
     }
 
-    auto check_all_of(auto first, auto last, auto&& predicate) noexcept {
+    auto test_all_of(auto first, auto last, auto&& predicate) noexcept {
         for (; first != last; ++first)
             if (!predicate(*first))
                 return false;
         return true;
     }
 
-    auto check_any_of(auto first, auto last, auto&& predicate) noexcept {
+    auto test_any_of(auto first, auto last, auto&& predicate) noexcept {
         for (; first != last; ++first)
             if (predicate(*first))
                 return true;
         return false;
     }
 
-    auto check_none_of(auto first, auto last, auto&& predicate) noexcept {
+    auto test_none_of(auto first, auto last, auto&& predicate) noexcept {
         for (; first != last; ++first)
             if (predicate(*first))
                 return false;

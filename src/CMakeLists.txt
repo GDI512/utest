@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 3.15)
 
 add_library (utest OBJECT)
 add_library (utest::utest ALIAS utest)
-target_sources (utest PRIVATE main.cpp state.cpp)
+target_sources (utest PRIVATE main.cpp)
 target_include_directories (utest PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
