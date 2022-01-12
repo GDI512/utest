@@ -2,7 +2,7 @@
 #include "state.hpp"
 
 int main() {
-    test::setvbuf();
+    test::set_output_buffer();
     test::test();
     return test::exit_code();
 }

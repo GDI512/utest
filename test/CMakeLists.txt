@@ -7,4 +7,5 @@ function (add_test_executable target source)
     add_test (NAME ${source} COMMAND ${target})
 endfunction ()
 
+add_test_executable (state state.cpp)
 add_test_executable (assert assert.cpp)

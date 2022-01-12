@@ -33,6 +33,18 @@ int main() {
         assert(!test::check_none_of(list.begin(), list.end(), [](auto x) { return x == 4; }));
     }
     {
+        test::clear_state();
+        test::group([] {});
+        assert(test::exit_code() == EXIT_SUCCESS);
+    }
+    {
+        test::clear_state();
+        test::group([] {
+            throw 0;
+        });
+        assert(test::exit_code() == EXIT_FAILURE);
+    }
+    {
         {
             test::clear_state();
             test::group([] {

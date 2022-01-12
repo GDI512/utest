@@ -9,7 +9,7 @@ namespace test {
 
     class exit_tag {};
 
-    auto setvbuf() noexcept -> void;
+    auto set_output_buffer() noexcept -> void;
 
     auto clear_state() noexcept -> void;
 
@@ -17,7 +17,7 @@ namespace test {
 
     auto report_error(source_location source) noexcept -> void;
 
-    auto test_throw(auto&& callable) noexcept {
+    auto assert_throw(auto&& callable) noexcept {
         try {
             callable();
             return false;
@@ -26,7 +26,7 @@ namespace test {
         }
     }
 
-    auto test_noexcept(auto&& callable) noexcept {
+    auto assert_noexcept(auto&& callable) noexcept {
         try {
             callable();
             return true;
@@ -35,21 +35,21 @@ namespace test {
         }
     }
 
-    auto test_all_of(auto first, auto last, auto&& predicate) noexcept {
+    auto assert_all_of(auto first, auto last, auto&& predicate) noexcept {
         for (; first != last; ++first)
             if (!predicate(*first))
                 return false;
         return true;
     }
 
-    auto test_any_of(auto first, auto last, auto&& predicate) noexcept {
+    auto assert_any_of(auto first, auto last, auto&& predicate) noexcept {
         for (; first != last; ++first)
             if (predicate(*first))
                 return true;
         return false;
     }
 
-    auto test_none_of(auto first, auto last, auto&& predicate) noexcept {
+    auto assert_none_of(auto first, auto last, auto&& predicate) noexcept {
         for (; first != last; ++first)
             if (predicate(*first))
                 return false;

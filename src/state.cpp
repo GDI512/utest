@@ -11,9 +11,9 @@ namespace test {
         code = EXIT_SUCCESS;
     }
 
-    auto setvbuf() noexcept -> void {
+    auto set_output_buffer() noexcept -> void {
         static char buffer[BUFSIZ];
-        std::setvbuf(stderr, buffer, _IOFBF, BUFSIZ);
+        setvbuf(stderr, buffer, _IOFBF, BUFSIZ);
     }
 
     auto exit_code() noexcept -> int {
@@ -22,8 +22,8 @@ namespace test {
 
     auto report_error(source_location source) noexcept -> void {
         code |= EXIT_FAILURE;
-        std::fprintf(stderr, "%s:%u:%u: assertion failure\n",
-            source.file_name(), source.line(), source.column());
+        fprintf(stderr, "%s:%u:%u: assertion failure\n", source.file_name(),
+          source.line(), source.column());
     }
 
 }

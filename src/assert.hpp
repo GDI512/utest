@@ -27,7 +27,7 @@ namespace test {
 
     auto check_throw(auto&& callable,
       source_location source = source_location::current()) noexcept {
-        const auto result = test_throw(callable);
+        const auto result = assert_throw(callable);
         if (!result)
             report_error(source);
         return result;
@@ -35,7 +35,7 @@ namespace test {
 
     auto check_noexcept(auto&& callable,
       source_location source = source_location::current()) noexcept {
-        const auto result = test_noexcept(callable);
+        const auto result = assert_noexcept(callable);
         if (!result)
             report_error(source);
         return result;
@@ -43,7 +43,7 @@ namespace test {
 
     auto check_all_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) noexcept {
-        const auto result = test_all_of(first, last, predicate);
+        const auto result = assert_all_of(first, last, predicate);
         if (!result)
             report_error(source);
         return result;
@@ -51,7 +51,7 @@ namespace test {
 
     auto check_any_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) noexcept {
-        const auto result = test_any_of(first, last, predicate);
+        const auto result = assert_any_of(first, last, predicate);
         if (!result)
             report_error(source);
         return result;
@@ -59,7 +59,7 @@ namespace test {
 
     auto check_none_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) noexcept {
-        const auto result = test_none_of(first, last, predicate);
+        const auto result = assert_none_of(first, last, predicate);
         if (!result)
             report_error(source);
         return result;
