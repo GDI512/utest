@@ -8,7 +8,5 @@ function (add_test_executable target source)
 endfunction ()
 
 add_test_executable (state state.cpp)
-add_test_executable (utility utility.cpp)
 add_test_executable (assert assert.cpp)
-add_test_executable (main main.cpp)
 add_test_executable (vector vector.cpp)

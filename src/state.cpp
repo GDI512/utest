@@ -1,43 +1,58 @@
 #include "state.hpp"
 
-#include <string_view>
 #include <iostream>
 
-using namespace std::string_view_literals;
+namespace test::core {
 
-namespace test {
+    auto exit_code = exit_success;
+    auto indent_count = 0;
+    auto output_enabled = true;
 
-    registry state = {};
-    console output = {};
-
-    registry::registry() noexcept : exit_code(exit_success) {}
-
-    auto registry::error() noexcept -> void {
+    auto error() noexcept -> void {
         exit_code = exit_failure;
     }
 
-    auto registry::clear() noexcept -> void {
-        exit_code = exit_success;
-    }
-
-    auto registry::get() const noexcept -> int {
+    auto state() noexcept -> int {
         return exit_code;
     }
 
-    console::console() noexcept : is_open(true) {}
-
-    auto console::error(source_location source) noexcept -> void {
-        if (is_open)
-            std::cerr << source.file_name() << ':' << source.line() << ':' << source.column()
-              << ": "sv << "assertion failure"sv << '\n';
+    auto reset() noexcept -> void {
+        exit_code = exit_success;
     }
 
-    auto console::open() noexcept -> void {
-        is_open = true;
+    auto write_group(const char* label) noexcept -> void {
+        if (output_enabled) {
+            for (auto count = 0; count < indent_count; count++)
+                std::cout << "  ";
+            std::cout << label << ":\n";
+            ++indent_count;
+        }
     }
 
-    auto console::silent() noexcept -> void {
-        is_open = false;
+    auto write_group_exit() noexcept -> void {
+        if (output_enabled)
+            --indent_count;
+    }
+
+    auto write_exit() noexcept -> void {
+        if (output_enabled)
+            std::cout << '\n' << "exit code: " << exit_code << '\n';
+    }
+
+    auto write_error(source_location source) noexcept -> void {
+        if (output_enabled) {
+            for (auto count = 0; count < indent_count; count++)
+                std::cout << "  ";
+            std::cerr << "error at " << source.file_name() << ':' << source.line() << '\n';
+        }
+    }
+
+    auto enable_output() noexcept -> void {
+        output_enabled = true;
+    }
+
+    auto disable_output() noexcept -> void {
+        output_enabled = false;
     }
 
 }
