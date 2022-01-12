@@ -5,101 +5,115 @@
 
 namespace test {
 
+    class require_tag {};
+
     using executable = auto (*)() -> void;
     extern executable test;
 
     auto group(auto&& callable, source_location source = source_location::current()) noexcept {
         try {
             callable();
-        } catch (const exit_tag&) {
-            ;
+        } catch (const require_tag&) {
         } catch (...) {
-            report_error(source);
+            state.error();
+            output.error(source);
         }
         return callable;
     }
 
     inline auto check(bool expression,
       source_location source = source_location::current()) noexcept {
-        if (!expression)
-            report_error(source);
+        if (!expression) {
+            state.error();
+            output.error(source);
+        }
         return expression;
     }
 
     auto check_throw(auto&& callable,
       source_location source = source_location::current()) noexcept {
         const auto result = assert_throw(callable);
-        if (!result)
-            report_error(source);
+        if (!result) {
+            state.error();
+            output.error(source);
+        }
         return result;
     }
 
     auto check_noexcept(auto&& callable,
       source_location source = source_location::current()) noexcept {
         const auto result = assert_noexcept(callable);
-        if (!result)
-            report_error(source);
+        if (!result) {
+            state.error();
+            output.error(source);
+        }
         return result;
     }
 
     auto check_all_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) noexcept {
         const auto result = assert_all_of(first, last, predicate);
-        if (!result)
-            report_error(source);
+        if (!result) {
+            state.error();
+            output.error(source);
+        }
         return result;
     }
 
     auto check_any_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) noexcept {
         const auto result = assert_any_of(first, last, predicate);
-        if (!result)
-            report_error(source);
+        if (!result) {
+            state.error();
+            output.error(source);
+        }
         return result;
     }
 
     auto check_none_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) noexcept {
         const auto result = assert_none_of(first, last, predicate);
-        if (!result)
-            report_error(source);
+        if (!result) {
+            state.error();
+            output.error(source);
+        }
         return result;
     }
 
     inline auto require(bool expression,
       source_location source = source_location::current()) {
         if (!check(expression, source))
-            throw exit_tag();
+            throw require_tag();
     }
 
     auto require_throw(auto&& callable,
       source_location source = source_location::current()) {
         if (!check_throw(callable, source))
-            throw exit_tag();
+            throw require_tag();
     }
 
     auto require_noexcept(auto&& callable,
       source_location source = source_location::current()) {
         if (!check_noexcept(callable, source))
-            throw exit_tag();
+            throw require_tag();
     }
 
     auto require_all_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) {
         if (!check_all_of(first, last, predicate, source))
-            throw exit_tag();
+            throw require_tag();
     }
 
     auto require_any_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) {
         if (!check_any_of(first, last, predicate, source))
-            throw exit_tag();
+            throw require_tag();
     }
 
     auto require_none_of(auto first, auto last, auto&& predicate,
       source_location source = source_location::current()) {
         if (!check_none_of(first, last, predicate, source))
-            throw exit_tag();
+            throw require_tag();
     }
 
 }

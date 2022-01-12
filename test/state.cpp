@@ -5,11 +5,11 @@
 
 int main() {
     {
-        assert(test::exit_code() == EXIT_SUCCESS);
-        test::report_error(test::source_location::current());
-        assert(test::exit_code() == EXIT_FAILURE);
-        test::clear_state();
-        assert(test::exit_code() == EXIT_SUCCESS);
+        assert(test::state.get() == test::exit_success);
+        test::state.error();
+        assert(test::state.get() == test::exit_failure);
+        test::state.clear();
+        assert(test::state.get() == test::exit_success);
     }
     {
         assert(test::assert_throw([] { throw 0; }));

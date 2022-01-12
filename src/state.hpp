@@ -7,15 +7,39 @@ namespace test {
 
     using std::experimental::source_location;
 
-    class exit_tag {};
+    constexpr auto exit_success = 0;
+    constexpr auto exit_failure = 1;
 
-    auto set_output_buffer() noexcept -> void;
+    class registry {
+      private:
+        int exit_code;
 
-    auto clear_state() noexcept -> void;
+      public:
+        registry() noexcept;
 
-    auto exit_code() noexcept -> int;
+      public:
+        auto error() noexcept -> void;
+        auto clear() noexcept -> void;
+        auto get() const noexcept -> int;
+    };
 
-    auto report_error(source_location source) noexcept -> void;
+    class console {
+      private:
+        bool is_open;
+
+      public:
+        console() noexcept;
+
+      public:
+        auto error(source_location source) noexcept -> void;
+        auto open() noexcept -> void;
+        auto silence() noexcept -> void;
+    };
+
+    extern registry state;
+    extern console output;
+
+    auto setvbuf() noexcept -> void;
 
     auto assert_throw(auto&& callable) noexcept {
         try {
