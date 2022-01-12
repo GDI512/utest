@@ -1,15 +1,15 @@
 #include "assert.hpp"
 #include "state.hpp"
 
-#include <cstring>
-#include <cstdio>
+#include <string_view>
+#include <iostream>
 
-char stdbuf[BUFSIZ];
+using namespace std::string_view_literals;
 
 int main(int argc, char** argv) {
-    setvbuf(stderr, stdbuf, _IOFBF, BUFSIZ);
-    if (argc > 1 && strcmp(argv[1], "--silent") == 0)
-        test::output.silence();
+    std::cerr.rdbuf()->pubsetbuf(new char[4096], 4096);
+    if (argc > 1 && argv[1] == "--silent"sv)
+        test::output.silent();
     test::test();
     return test::state.get();
 }

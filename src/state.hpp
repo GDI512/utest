@@ -33,7 +33,7 @@ namespace test {
       public:
         auto error(source_location source) noexcept -> void;
         auto open() noexcept -> void;
-        auto silence() noexcept -> void;
+        auto silent() noexcept -> void;
     };
 
     extern registry state;

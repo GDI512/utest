@@ -1,7 +1,9 @@
 #include "state.hpp"
 
-#include <cstdlib>
-#include <cstdio>
+#include <string_view>
+#include <iostream>
+
+using namespace std::string_view_literals;
 
 namespace test {
 
@@ -25,23 +27,17 @@ namespace test {
     console::console() noexcept : is_open(true) {}
 
     auto console::error(source_location source) noexcept -> void {
-        if (is_open) {
-            fprintf(stderr, "%s:%u:%u: assertion failure\n",
-              source.file_name(), source.line(), source.column());
-        }
+        if (is_open)
+            std::cerr << source.file_name() << ':' << source.line() << ':' << source.column()
+              << ": "sv << "assertion failure"sv << '\n';
     }
 
     auto console::open() noexcept -> void {
         is_open = true;
     }
 
-    auto console::silence() noexcept -> void {
+    auto console::silent() noexcept -> void {
         is_open = false;
-    }
-
-    auto setvbuf() noexcept -> void {
-        static char buffer[BUFSIZ];
-        setvbuf(stderr, buffer, _IOFBF, BUFSIZ);
     }
 
 }

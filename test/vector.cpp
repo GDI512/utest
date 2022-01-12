@@ -27,7 +27,6 @@ test::executable test::test = test::group([] {
         test::group([] {
             const auto object = std::vector<int>(64);
             const auto other = std::vector<int>(std::move(object));
-            test::check(object.empty() == 0);
             test::check(other.size() == 64);
             test::check(other.capacity() == 64);
         });
