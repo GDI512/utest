@@ -16,6 +16,7 @@ namespace test {
         } catch (...) {
             report_error(source);
         }
+        return callable;
     }
 
     inline auto check(bool expression,
