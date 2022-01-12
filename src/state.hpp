@@ -39,8 +39,6 @@ namespace test {
     extern registry state;
     extern console output;
 
-    auto setvbuf() noexcept -> void;
-
     auto assert_throw(auto&& callable) noexcept {
         try {
             callable();
