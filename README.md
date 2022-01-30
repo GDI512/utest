@@ -99,5 +99,5 @@ test::executable test::test = [] {
   effectively exclude some part of the test from execution
 
 ## Command line
-* If the first option passed to the test executable is `--silent`, the output will be
+* If the first option passed to the test executable is *--silent*, the output will be
   disabled
