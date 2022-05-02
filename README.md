@@ -1,22 +1,22 @@
 # About
-This is a small, macro-free unit testing library designed to provide most of the
+μtest is a small, macro-free unit testing library designed to provide most of the
 functionality of larger testing frameworks without the associated compile time overhead.
 Instead of relying on the preprocessor, it makes use of the C++20 <source_location> and
-lambda expressions, making the structure of your tests more similar to the actual C++
+lambda expressions, making the structure of your tests more similar to an actual C++
 code.
 
 # Getting started
 For now, the best way to add μtest to your (CMake) project is to clone this repository and
 add it via the `add_subdirectory()` command. This will create the alias target
-`utest::utest` that can be linked to your executables just like any other library through `target_link_libraries()`.
+`utest::utest` that can be linked to your executables just like any other library through
+`target_link_libraries()`.
 
 The example below is a sample test pasted from *test/vector.cpp*. It demonstrates almost
-all of μtest's features, most notably the way your executables interact with the
+all of μtest's features, most notably the way your `test::executable` interacts with the
 predefined `main()` function.
 
 ```c++
 #include <utest.hpp>
-
 #include <vector>
 
 test::executable test::test = [] {
@@ -76,7 +76,7 @@ test::executable test::test = [] {
 
 # Reference
 
-## Test cases and the executable
+## Test cases
 * `test::executable` - A function pointer with `void` return type and zero arguments. It
   is called from the library's `main()`
 * `test::group(const char*, auto&&)` - A test case that defines a context for assertions.
