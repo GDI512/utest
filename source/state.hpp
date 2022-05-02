@@ -1,7 +1,7 @@
 #ifndef UTEST_STATE_HPP
 #define UTEST_STATE_HPP
 
-#ifdef UTEST_CLANG
+#if defined(UTEST_CLANG) || defined(UTEST_GNU)
 #include <experimental/source_location>
 #else
 #include <source_location>
@@ -9,7 +9,7 @@
 
 namespace test::core {
 
-#ifdef UTEST_CLANG
+#if defined(UTEST_CLANG) || defined(UTEST_GNU)
     using std::experimental::source_location;
 #else
     using std::source_location;
