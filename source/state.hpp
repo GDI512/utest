@@ -1,11 +1,19 @@
 #ifndef UTEST_STATE_HPP
 #define UTEST_STATE_HPP
 
+#ifdef UTEST_CLANG
 #include <experimental/source_location>
+#else
+#include <source_location>
+#endif
 
 namespace test::core {
 
+#ifdef UTEST_CLANG
     using std::experimental::source_location;
+#else
+    using std::source_location;
+#endif
 
     class require_tag {};
 
