@@ -1,3 +1,6 @@
+![Linux Build](https://github.com/GDI512/utest/actions/workflows/linux-ci.yml/badge.svg)
+![Windows Build](https://github.com/GDI512/utest/actions/workflows/windows-ci.yml/badge.svg)
+
 # About
 μtest is a small, macro-free unit testing library designed to provide most of the
 functionality of larger testing frameworks without the associated compile time overhead.
